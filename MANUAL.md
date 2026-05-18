@@ -1,9 +1,3 @@
-This is an excellent next step. A robust financial model is only as valuable as the stakeholder's ability to understand and interpret its inputs and outputs.
-
-Here is a comprehensive user manual and walkthrough designed for your end-users (e.g., investors, facility operators, and energy traders). It breaks down the terminology, the context behind each variable, and how to interpret the final dashboard visualizations.
-
----
-
 # User Manual: BTM Financial Model
 
 ## Overview
