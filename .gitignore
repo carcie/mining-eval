@@ -1,0 +1,59 @@
+# ==============================================================================
+# Python Environment & Bytecode
+# ==============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+
+# ==============================================================================
+# Streamlit Configuration & Runtime Status
+# ==============================================================================
+.streamlit/config.toml
+.streamlit/secrets.toml
+# If you want to keep the appearance config but hide secrets, use the lines below instead:
+# !.streamlit/config.toml
+# .streamlit/secrets.toml
+
+# ==============================================================================
+# Data & Data Science Artifacts
+# ==============================================================================
+# Ignore any cached data files or raw datasets pulled or converted to CSV/Parquet
+*.csv
+*.parquet
+*.json
+# Except keep explicit config profiles if they are tracking infrastructure baselines
+!engine/configs/
+
+# ==============================================================================
+# Operating System & IDE Specific Files
+# ==============================================================================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# ==============================================================================
+# Build & Distribution
+# ==============================================================================
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
