@@ -9,28 +9,28 @@ from engine.core import MiningFinancialModel
 from engine.market import MarketCalibrator
 
 st.set_page_config(page_title="BTM Financial Model", layout="wide")
-
+    
 HARDWARE_LIBRARY = {
-    "Bitmain Antminer S23 Hyd 3U (SHA-256)": {"th": 1160.0, "w": 11020, "cost": 7760},
-    "Bitdeer SealMiner A4 Ultra Hydro (SHA-256)": {"th": 886.0, "w": 8372, "cost": 9983},
+    "Bitmain Antminer S23 Hyd 3U (SHA-256)": {"th": 1160.0, "w": 11020, "cost": 7755},
+    "Bitdeer SealMiner A4 Ultra Hydro (SHA-256)": {"th": 886.0, "w": 8372, "cost": 9966},
     "Bitmain Antminer S23e Hyd 2U (SHA-256)": {"th": 865.0, "w": 8650, "cost": 11699},
-    "Bitmain Antminer S21e XP Hyd 3U (SHA-256)": {"th": 860.0, "w": 11180, "cost": 5140},
-    "Bitdeer SealMiner A4 Pro Hydro (SHA-256)": {"th": 680.0, "w": 7412, "cost": 8666},
-    "Bitdeer SealMiner A3 Pro Hydro (SHA-256)": {"th": 660.0, "w": 8250, "cost": 6995},
-    "Bitmain Antminer S23 Hyd (SHA-256)": {"th": 580.0, "w": 5510, "cost": 11980},
-    "Bitmain Antminer S21 XP+ Hyd (SHA-256)": {"th": 500.0, "w": 5500, "cost": 2700},
-    "Bitmain Antminer S21j XP Hyd (SHA-256)": {"th": 495.0, "w": 5940, "cost": 6070},
-    "Bitmain Antminer L11 Hyd 2U (Scrypt)": {"th": 0.035, "w": 5775, "cost": 9000},
-    "Bitmain Antminer L11 Hyd 6U (Scrypt)": {"th": 0.033, "w": 5676, "cost": 9627},
-    "Bitdeer SealMiner DL1 Air (Scrypt)": {"th": 0.025, "w": 3725, "cost": 8000},
-    "Pinecone Matches INIBOX Pro (VersaHash)": {"th": 0.0024, "w": 1280, "cost": 7046},
-    "IceRiver ALEO AE3 (zkSNARK)": {"th": 0.002, "w": 3400, "cost": 4863},
-    "Pinecone Matches INIBOX (VersaHash)": {"th": 0.00085, "w": 500, "cost": 1964},
-    "Bitmain Antminer X9 (RandomX)": {"th": 0.000001, "w": 2472, "cost": 5363},
-    "Bitmain Antminer Z15 Pro (Equihash)": {"th": 0.00000084, "w": 2780, "cost": 950},
-    "Bitmain Antminer Z15 (Equihash)": {"th": 0.00000042, "w": 1510, "cost": 812},
-    "Innosilicon A9++ ZMaster (Equihash)": {"th": 0.00000014, "w": 1550, "cost": 0},
-    "Bitmain Antminer Z11 (Equihash)": {"th": 0.000000135, "w": 1418, "cost": 266},
+    "Bitmain Antminer S23 Hyd (SHA-256)": {"th": 580.0, "w": 5510, "cost": 11979},
+    "Bitdeer SealMiner A4 Pro Hydro (SHA-256)": {"th": 680.0, "w": 7412, "cost": 8662},
+    "Bitmain Antminer S21 XP+ Hyd (SHA-256)": {"th": 500.0, "w": 5500, "cost": 2699},
+    "Bitdeer SealMiner A3 Pro Hydro (SHA-256)": {"th": 660.0, "w": 8250, "cost": 6988},
+    "Bitmain Antminer S21e XP Hyd 3U (SHA-256)": {"th": 860.0, "w": 11180, "cost": 5139},
+    "Bitmain Antminer S21j XP Hyd (SHA-256)": {"th": 495.0, "w": 5940, "cost": 6069},
+    "Bitdeer SealMiner A4 Pro Air (SHA-256)": {"th": 336.0, "w": 3662, "cost": 3373},
+    "Bitmain Antminer S21 XP Hyd (SHA-256)": {"th": 473.0, "w": 5676, "cost": 1042},
+    "Bitmain Antminer S23 (SHA-256)": {"th": 318.0, "w": 3498, "cost": 4950},
+    "Bitmain Antminer S23 Imm. (SHA-256)": {"th": 442.0, "w": 5304, "cost": 7880},
+    "MicroBT WhatsMiner M7DS (SHA-256)": {"th": 680.0, "w": 9200, "cost": 7859},
+    "Bitmain Antminer S21e XP Hyd (SHA-256)": {"th": 430.0, "w": 5590, "cost": 2699},
+    "MicroBT WhatsMiner M73S+ (SHA-256)": {"th": 540.0, "w": 7200, "cost": 7909},
+    "Bitdeer SealMiner A3 Pro Air (SHA-256)": {"th": 290.0, "w": 3625, "cost": 4449},
+    "Bitdeer SealMiner A3 Hydro (SHA-256)": {"th": 500.0, "w": 6750, "cost": 6076},
+    "Canaan Avalon A16XP-300T (SHA-256)": {"th": 300.0, "w": 3850, "cost": 4199},
+    "MicroBT WhatsMiner M76S+ (SHA-256)": {"th": 390.0, "w": 5200, "cost": 4875},
 }
 
 with st.sidebar:
@@ -43,7 +43,6 @@ with st.sidebar:
         c_usd = st.number_input("Unit Cost ($)", value=2000.0)
     else:
         data = HARDWARE_LIBRARY[selected_model]
-        st.info(f"Specs: {data['th']} TH/s | {data['w']} W")
         h_th = data['th']
         p_w = data['w']
         c_usd = st.number_input("Unit Cost ($)", value=float(data['cost']), step=100.0)
@@ -54,11 +53,20 @@ with st.sidebar:
     fac = FacilityConfig(
         max_power_mw=st.slider("Max Power Cap (MW)", 1.0, 20.0, 20.0),
         pue=st.slider("PUE", 1.0, 1.2, 1.03),
-        energy_price_kwh=st.number_input("Energy Price ($/kWh)", value=0.045, format="%.3f"),
+        energy_price_kwh=st.number_input("Energy Price ($/kWh)", value=0.025, format="%.3f"),
         infra_markup_pct=0.15,
-        monthly_maintenance_usd=st.number_input("Fixed O&M ($/mo)", value=5000.0)
+        monthly_maintenance_usd=st.number_input("Fixed O&M ($/mo)", value=15000.0)
     )
 
+with st.container():
+    st.subheader(f"Current Scenario: {selected_model}")
+    hc1, hc2, hc3, hc4 = st.columns(4)
+    hc1.metric("Hashrate", f"{h_th:,.0f} TH/s")
+    hc2.metric("Power", f"{p_w:,.0f} W")
+    hc3.metric("Efficiency", f"{(p_w/h_th):.1f} J/TH")
+    hc4.metric("Capital Expense", f"${c_usd:,.0f} per unit")
+    st.divider()
+    
 st.subheader("Market Calibration & Stochastic Inputs")
 col1, col2, col3 = st.columns(3)
 
@@ -114,16 +122,16 @@ results = model.run_monte_carlo(tmy_data)
 st.divider()
 m1, m2, m3, m4 = st.columns(4)
 m1.metric("Median NPV", f"${results['npv_median']:,.0f}")
-m2.metric("Prob. of Profit (NPV > 0)", f"{results['prob_positive_npv']:.1%}")
-m3.metric("Required Fleet Size", f"{results['fleet_size_units']:,} Units")
-m4.metric("Rev/kWh (Current)", f"${model.revenue_per_kwh(h0):.4f}")
+m2.metric("Prob. NPV > 0", f"{results['prob_positive_npv']:.1%}")
+m3.metric("Fleet Size", f"{results['fleet_size_units']:,} Units")
+m4.metric("Rev/kWh", f"${model.revenue_per_kwh(h0):.4f}")
 
 fig = make_subplots(
     rows=2, cols=2,
     specs=[[{"colspan": 2, "secondary_y": True}, None],
            [{}, {}]],
     subplot_titles=(
-        "Historical BTC Price vs. Revenue/kWh",
+        "BTC vs. Revenue/kWh",
         "Cumulative Free Cash Flow (100 Paths)",
         "NPV Probability Distribution"
     ),
@@ -146,8 +154,8 @@ if not btc_history.empty:
 
 cum_cf = np.cumsum(results['raw_cash_flows'], axis=0)
 for i in range(min(100, n_paths)):
-    fig.add_trace(go.Scatter(y=cum_cf[:, i], mode='lines', line=dict(color='#3498db', width=1), opacity=0.05, showlegend=False), row=2, col=1)
-fig.add_trace(go.Scatter(y=np.median(cum_cf, axis=1), mode='lines', line=dict(color='white', width=3), name='Median CF'), row=2, col=1)
+    fig.add_trace(go.Scatter(y=cum_cf[:, i], mode='lines', line=dict(color='orange', width=1), opacity=0.05, showlegend=False), row=2, col=1)
+fig.add_trace(go.Scatter(y=np.median(cum_cf, axis=1), mode='lines', line=dict(color='green', width=3), name='Median CF'), row=2, col=1)
 
 npv_totals = results['raw_cash_flows'].sum(axis=0)
 fig.add_trace(go.Histogram(x=npv_totals, nbinsx=50, marker_color='#2ecc71', name='NPV Freq'), row=2, col=2)
