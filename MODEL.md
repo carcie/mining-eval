@@ -22,12 +22,9 @@ All mathematical formulations are stated explicitly, assumptions are justified, 
 
 $$\text{Total facility load} = \text{IT load} \times \text{PUE}$$
 
-
-
 The 20 MW cap applies to the total facility load, so the allowable IT load is:
 
 $$\text{Allowable IT load} = \frac{20 \text{ MW}}{\text{PUE}}$$
-
 
 * **Throttling and Fleet Management:** The miner’s total power draw can be modulated continuously from 0 to 20 MW (idealised). In practice this is achieved by switching individual units on/off, with a sufficiently large number of units that the quantisation error is negligible. Each ASIC is assumed to have a constant hashrate‑per‑watt efficiency across its entire load range (no efficiency loss at partial load).
 
@@ -37,18 +34,14 @@ $$\text{Allowable IT load} = \frac{20 \text{ MW}}{\text{PUE}}$$
 * **BTC Price & Difficulty:** Both evolve stochastically. The hashprice drift and volatility are modelled directly as a Geometric Brownian Motion (GBM) to reduce dimensionality.
 * Long‑term expected hashprice decline (negative drift) reflects expected network hashrate growth exceeding any BTC price appreciation.
 * Volatility captures combined price and difficulty uncertainty.
-
-
 * **Horizon:** The project is evaluated over a finite horizon $T$ (e.g., 24 or 48 months), after which all hardware is considered fully depreciated (no salvage value).
 
 ### 2.4 Financial Assumptions
 
 * **Capital Expenditure (CAPEX):** Purchase cost of ASICs + balance‑of‑plant (transformers, switchgear, cooling). For simplicity, balance‑of‑plant is modelled as a fixed mark‑up on hardware cost (or a lump sum).
 * **Operating Expenditure (OPEX):**
-* Energy cost: $E_{\text{consumed}} \times \text{fixed\_price/kWh}$
-* Maintenance & overheads: a fixed monthly cost, possibly as a percentage of hardware CAPEX.
-
-
+    * Energy cost: $E_{\text{consumed}} \times$ `fixed_price/kWh`
+    * Maintenance & overheads: a fixed monthly cost, possibly as a percentage of hardware CAPEX.
 * **Discount Rate:** Weighted Average Cost of Capital (WACC, $r$).
 * **Tax and Depreciation:** Ignored for simplicity; can be added later.
 
@@ -84,7 +77,7 @@ $$H_{\text{inst}} = N \times h \quad [\text{TH/s}] = N \times h \times 10^{-6} \
 
 ### 3.3 Effective Hashrate and Revenue
 
-Since the miner throttles with available generation, the **realised hashrate** in hour $t$ is scaled proportionally to the power drawn:
+Since the miner throws with available generation, the **realised hashrate** in hour $t$ is scaled proportionally to the power drawn:
 
 $$H_{\text{eff}}(t) = H_{\text{inst}} \times \frac{P_{\text{load}}(t)}{P_{\max}}$$
 
@@ -106,14 +99,9 @@ $$R_m = \left( \sum_{t \in m} H_{\text{eff}}(t) \right) \times H_{\text{daily},m
 
 ### 3.4 Cost Model
 
-* **CAPEX:** 
-$$\text{CAPEX} = N \times C_u + \text{Infra\_Cost}$$
+* **CAPEX:** $$\text{CAPEX} = N \times C_u + \text{InfraCost}$$
 
-
-* **Monthly OPEX:** 
-$$\text{OPEX}_m = E_m \times p_{\text{fix}} + \text{Maintenance}_m$$
-
-
+* **Monthly OPEX:** $$\text{OPEX}_m = E_m \times p_{\text{fix}} + \text{Maintenance}_m$$
 
 where $p_{\text{fix}}$ is the fixed energy price (USD/kWh) and $E_m$ is in kWh.
 
@@ -163,7 +151,7 @@ A tornado chart can be constructed by varying key inputs ($\pm 20\%$) one at a t
 
 ---
 
-# Deep Dive: The Energy‑Revenue Relationship
+# Energy‑Revenue Relationship
 
 Relationship between the electrical energy consumed by a mining facility and the fiat revenue it generates.
 
@@ -228,7 +216,7 @@ $$k = \frac{3.6 \times 10^6}{J} \cdot HP_{\text{per TH}} \quad \text{or equivale
 
 ---
 
-## 2. Why the Relationship Is Not Trivial
+## 2. The Relationship Is Not Trivial
 
 In reality, both $J$ and $HP$ change over time:
 
@@ -268,13 +256,11 @@ Historical data for your mining facility (or a similar one) should include:
 
 $$R_t = \beta \, E_t + \varepsilon_t$$
 
-
 The estimated coefficient $\hat{\beta}$ is the **average realized revenue per kWh** over the sample period. If the hardware efficiency didn’t change, this $\hat{\beta}$ should be close to the deterministic $k$ computed using the average hashprice. Any deviation indicates hardware degradation, curtailment losses, or measurement errors.
 
 #### b) Multiple regression with hashprice as a control
 
 $$R_t = \beta_1 E_t + \beta_2 HP_t + \varepsilon_t$$
-
 
 Theory dictates that $\beta_1$ should be proportional to $1/J$ and $\beta_2$ should be proportional to the total hashes per unit energy. This allows you to verify the physical model using empirical data.
 
@@ -314,7 +300,7 @@ Because $E_{\text{consumed}}(t) = \min(G(t), P_{\max})$, the monthly revenue is 
 
 **Mathematical tools:** Monte Carlo simulation with a deterministic generation profile is a robust numerical method. The result gives you the **stochastic revenue‑per‑kWh function** $f(E) = \mathbb{E}[R \mid E]$. If $HP_t$ is independent of generation, the function is linear with a slope equal to the average hashprice scaled by hardware efficiency. If not, you’ll observe curvature.
 
-### 3.5 Optimization Under Uncertainty: Stochastic Programming
+### 3.5 Optimization Under Uncertainty
 
 If the facility can *choose* its load level (e.g., by turning miners on/off), the relationship between energy and revenue becomes a decision function. Tools like **Dynamic Programming** or **Reinforcement Learning** can find the optimal dispatch policy that maximizes profit by balancing the cost of energy (fixed price) against the stochastic revenue. Here the “revenue generated per unit energy” is the marginal value of electricity. The mathematical framework is Markov Decision Processes (MDP) with state variables equal to the current hashprice and available generation.
 
@@ -331,13 +317,11 @@ If the facility can *choose* its load level (e.g., by turning miners on/off), th
 1. Import generation profile $G(t)$ (8760 hours).
 2. Initialize Monte Carlo parameters: $H_0$ (initial hashprice), $\mu, \sigma$, and number of paths $N$.
 3. For each path:
-* Generate an 8760‑hour hashprice series: start with daily values from GBM, interpolate to hourly (e.g., constant within day, or a small diurnal pattern if desired).
-* For each hour, compute power drawn $P(t) = \min(G(t), 20 \text{ MW})$.
-* Energy consumed in hour: $E(t) = P(t) \times 1 \text{ h}$.
-* Calculate daily revenue using daily average power and daily $HP$ to resolve unit scales efficiently.
-* Sum monthly revenue and energy.
-
-
+    * Generate an 8760‑hour hashprice series: start with daily values from GBM, interpolate to hourly (e.g., constant within day, or a small diurnal pattern if desired).
+    * For each hour, compute power drawn $P(t) = \min(G(t), 20 \text{ MW})$.
+    * Energy consumed in hour: $E(t) = P(t) \times 1 \text{ h}$.
+    * Calculate daily revenue using daily average power and daily $HP$ to resolve unit scales efficiently.
+    * Sum monthly revenue and energy.
 4. For each path, compute the annual average revenue per kWh:
 
 $$\text{Average Revenue per kWh} = \frac{\text{Total Revenue}}{\text{Total Energy}}$$
