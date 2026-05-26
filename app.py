@@ -8,7 +8,7 @@ from engine.configs import HardwareConfig, FacilityConfig, MarketConfig
 from engine.core import MiningFinancialModel
 from engine.market import MarketCalibrator
 
-st.set_page_config(page_title="BTM Financial Model", layout="wide")
+st.set_page_config(page_title="CG Model | Digdefi", layout="wide", page_icon="assets/img/logo1.png")
     
 HARDWARE_LIBRARY = {
     "Bitmain Antminer S23 Hyd 3U (SHA-256)": {"th": 1160.0, "w": 11020, "cost": 7755},
@@ -33,6 +33,7 @@ HARDWARE_LIBRARY = {
     "MicroBT WhatsMiner M76S+ (SHA-256)": {"th": 390.0, "w": 5200, "cost": 4875},
 }
 
+st.logo("assets/img/logo2.png", size="large")
 with st.sidebar:
     st.header("Hardware Config")
     selected_model = st.selectbox("ASIC Model", list(HARDWARE_LIBRARY.keys()) + ["Custom"])

@@ -1,5 +1,5 @@
 [theme]
-primaryColor = "#BCE4FE"             
+primaryColor = "#022B7B"             
 backgroundColor = "#fefefe"          
 secondaryBackgroundColor = "#E6EAED" 
 textColor = "#101010"                
@@ -14,5 +14,5 @@ codeBackgroundColor = "#f3f4f6"
 showSidebarBorder = true
 
 [theme.sidebar]
-backgroundColor = "#E6EAED"          
+backgroundColor = "#BCE4FE"          
 secondaryBackgroundColor = "#e5e7eb" 
