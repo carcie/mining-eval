@@ -18,10 +18,10 @@ class MarketCalibrator:
     def calibrate_from_btc(
         ticker: str = "BTC-USD",
         period: str = "2y",
-        difficulty_growth_rate: float = 0.25,
-        initial_hashprice: float = 60.0,
-        horizon_months: int = 24,
-        discount_rate: float = 0.12,
+        difficulty_growth_rate: float = 0.15,
+        initial_hashprice: float = 40.0,
+        horizon_months: int = 12,
+        discount_rate: float = 0.09,
         num_paths: int = 5000
     ) -> MarketConfig:
         try:
