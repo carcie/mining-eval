@@ -12,10 +12,8 @@ env/
 # ==============================================================================
 # Streamlit Configuration & Runtime Status
 # ==============================================================================
-.streamlit/config.toml
-.streamlit/secrets.toml
-# If you want to keep the appearance config but hide secrets, use the lines below instead:
-# !.streamlit/config.toml
+
+!.streamlit/config.toml
 # .streamlit/secrets.toml
 
 # ==============================================================================
